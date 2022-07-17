@@ -24,13 +24,13 @@ class Admin(Usuario):
         super().__init__(id, nome, idade, email)
 
 class PessoaFisica(Usuario):
-    def __init__(self, cpf, endereço, id, nome, idade, email):
+    def __init__(self, cpf, id, nome, idade, email):
         super().__init__(id, nome, idade, email)
         self.CPF = cpf
         self.endereço = Endereço()
 
 class PessoaJuridica(Usuario):
-    def __init__(self, cnpj, endereço, id, nome, idade, email):
+    def __init__(self, cnpj, id, nome, idade, email):
         super().__init__(id, nome, idade, email)
         self.CNPJ = cnpj
         self.endereço = Endereço()
