@@ -6,7 +6,12 @@ class Usuario():
         self.email = email
         
     #Atualização de dados, função pronta ou sets?
-    def set_id(self, id):
+    def atualizar_dados(self, nome, idade, email):
+        self.nome = nome
+        self.idade = idade
+        self.email = email
+
+    '''def set_id(self, id):
         self.id = id
 
     def set_nome(self, nome):
@@ -16,7 +21,7 @@ class Usuario():
         self.idade = idade
     
     def set_email(self, email):
-        self.email = email
+        self.email = email'''
          
 
 class Admin(Usuario):
@@ -29,11 +34,23 @@ class PessoaFisica(Usuario):
         self.CPF = cpf
         self.endereço = Endereço()
 
+    def atualizar_dados(self, cpf, nome, idade, email):
+        self.CPF = cpf
+        self.nome = nome
+        self.idade = idade
+        self.email = email
+
 class PessoaJuridica(Usuario):
     def __init__(self, cnpj, id, nome, idade, email):
         super().__init__(id, nome, idade, email)
         self.CNPJ = cnpj
         self.endereço = Endereço()
+
+    def atualizar_dados(self, cnpj, nome, idade, email):
+        self.CNPJ = cnpj
+        self.nome = nome
+        self.idade = idade
+        self.email = email
 
 class Endereço():
     def __init__ (self, rua, complemento, cidade, cep):
@@ -43,7 +60,13 @@ class Endereço():
         self.CEP = cep
 
     #Atualizar Endereço, função pronta ou sets?
-    def set_rua(self, rua):
+    def atualizar_endereço(self, rua, complemento, cidade, cep):
+        self.rua = rua
+        self.complemento = complemento
+        self.cidade = cidade
+        self.CEP = cep
+
+    '''def set_rua(self, rua):
         self.rua = rua
 
     def set_complemento(self, complemento):
@@ -53,4 +76,4 @@ class Endereço():
         self.cidade = cidade
     
     def set_CEP(self, cep):
-        self.CEP = cep
+        self.CEP = cep'''
