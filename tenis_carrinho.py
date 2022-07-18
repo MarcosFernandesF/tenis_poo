@@ -8,18 +8,20 @@ class Tenis():
     def adicionar_produto(self, quantia):
         self.quantidade += quantia
 
-    #Buscar informações sobre o produto
+    def listar_dados(self):
+        print("ID: {} | Nome: {} | Quantidade: {} | Valor: {} R$" .format(self.id, self.nome, self.quantidade, self.valor))
+
+    def atualizar_dados(self, nome, quantidade, valor):
+        self.nome = nome
+        self.quantidade = quantidade
+        self.valor = valor
+        
     def get_id(self):
         return self.id
 
     def get_nome(self):
         return self.nome
-
-    def get_quantidade(self):
-        return self.quantidade
-
-    def get_valor(self):
-        return self.valor
+    
 
 class CarrinhoDeCompras():
     def __init__(self):
