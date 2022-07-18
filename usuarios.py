@@ -29,10 +29,10 @@ class Admin(Usuario):
         super().__init__(id, nome, idade, email)
 
 class PessoaFisica(Usuario):
-    def __init__(self, cpf, id, nome, idade, email):
+    def __init__(self, cpf, id, nome, idade, email, endereço):
         super().__init__(id, nome, idade, email)
         self.CPF = cpf
-        self.endereço = Endereço()
+        self.endereço = endereço
 
     def atualizar_dados(self, cpf, nome, idade, email):
         self.CPF = cpf
@@ -40,17 +40,21 @@ class PessoaFisica(Usuario):
         self.idade = idade
         self.email = email
 
-class PessoaJuridica(Usuario):
-    def __init__(self, cnpj, id, nome, idade, email):
-        super().__init__(id, nome, idade, email)
-        self.CNPJ = cnpj
-        self.endereço = Endereço()
+    def get_id(self):
+        return self.id
 
-    def atualizar_dados(self, cnpj, nome, idade, email):
+class PessoaJuridica(Usuario):
+    def __init__(self, cnpj, id, nome, email):
+        super().__init__(id, nome, email)
+        self.CNPJ = cnpj
+
+    def atualizar_dados(self, cnpj, nome, email):
         self.CNPJ = cnpj
         self.nome = nome
-        self.idade = idade
         self.email = email
+
+    def get_id(self):
+        return self.id
 
 class Endereço():
     def __init__ (self, rua, complemento, cidade, cep):
@@ -64,7 +68,7 @@ class Endereço():
         self.rua = rua
         self.complemento = complemento
         self.cidade = cidade
-        self.CEP = cep
+        self.CEP
 
     '''def set_rua(self, rua):
         self.rua = rua
