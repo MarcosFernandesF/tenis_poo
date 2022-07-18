@@ -72,7 +72,7 @@ while True:
             else:
                 print("Essa conta não existe!")
                 print("")
-
+    print()
     elif op == 4:
         print("1. Cadastrar Produto")
         print("2. Alterar dados do produto")
