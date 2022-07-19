@@ -5,12 +5,15 @@ class Endereço():
         self.cidade = cidade
         self.CEP = cep
 
+    def listar_dados(self):
+        print("Rua: {} | Complemento: {} | Cidade: {} | CEP: {}".format(self.rua, self.complemento, self.cidade, self.CEP))
+
     #Atualizar Endereço, função pronta ou sets?
     def atualizar_endereço(self, rua, complemento, cidade, cep):
         self.rua = rua
         self.complemento = complemento
         self.cidade = cidade
-        self.CEP
+        self.CEP = cep
 
     '''def set_rua(self, rua):
         self.rua = rua
