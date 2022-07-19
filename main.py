@@ -6,6 +6,7 @@ endereco = Endereço("Lauro Linhares", "Não sei", "Florianópolis", "88036-000"
 admin = Admin(20, 'Marcos', 20, 'marcos.rff@grad,ufsc.br')
 usuario_cpf = PessoaFisica(21, '128.991.219-01', 'MarcosCPF', 21, 'marcosrff.2001@gmail.com', endereco)
 usuario_cnpj = PessoaJuridica(22, '83.899.526/0001-82', 'MarcosCNPJ', 22, 'marcos.empresa@gmail.com')
+carrinho = CarrinhoDeCompras()
 
 lista_usuarios = [] #Lista de usuarios
 lista_produtos = [] #Lista de produtos
@@ -22,7 +23,7 @@ while True:
     print("1. Cadastrar Usuario")
     print("2. Atualizar Dados") 
     print("3. Atualizar Endereço") #É preciso listar o endereço em algum momento
-    print("4. Realizar Compra") 
+    print("4. Comprar Produto") #Carrinho de compra
     print("5. Menu Admin")
     print("6. Sair")
     op = int(input("Digite um número para executar uma operação: "))
@@ -109,10 +110,47 @@ while True:
                     print("Apenas pessoas físicas possuem endereço ")
                     print("")
                     break
-            else:
-                print("Essa conta não existe!")
-                print("")
+        else:
+            print("Essa conta não existe!")
+            print("")
     
+    elif op == 4:
+        print("----------Menu de Compra----------")
+        print("1. Mostrar Estoque")
+        print("2. Adicionar no carrinho")
+        print("3. Retirar do carrinho")
+        print("4. Mostrar carrinho de compras")
+        print("5. Efetuar Compra")
+        op = int(input("Digite um número para executar uma operação: "))
+        print("")
+
+        if op == 1:
+            print("------------------Estoque------------------")
+            for produto in estoque:
+                for tenis in lista_produtos:
+                    if produto == tenis.get_nome():
+                        print(f"Produto: {produto} | Preço: {tenis.get_valor()} R$ | Quantidade: {estoque[produto]}")
+            print("")
+
+        elif op == 2:
+            print("------------------Estoque------------------")
+            for produto in estoque:
+                for tenis in lista_produtos:
+                    if produto == tenis.get_nome():
+                        print(f"ID: {tenis.get_id()} | Produto: {produto} | Preço: {tenis.get_valor()} R$ | Quantidade: {estoque[produto]}")
+            print("")
+            while True:
+                id = int(input("Digite o ID do produto que deseja comprar, caso contrário, digite 'S' para sair da compra: "))
+                if id.upper() == 'S':
+                    break
+                else:
+                    for tenis in lista_produtos:
+                        if id == tenis.get_id():
+                            carrinho.inserir_produto(tenis)
+
+                
+        
+
     elif op == 5:
         while True: #Laço para continuar no mesmo menu mesmo após terminar a operação
             print("--------------------Menu ADMIN--------------------")
@@ -190,5 +228,11 @@ while True:
                 break
 
             else:
-                print("Numero inválido")
+                print("Operação inválida")
                 print("")
+
+    elif op == 6:
+        break
+
+    else:
+        print("Operação Inválida")

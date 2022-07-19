@@ -21,6 +21,9 @@ class Tenis():
 
     def get_nome(self):
         return self.nome
+
+    def get_valor(self):
+        return self.valor
     
 
 class CarrinhoDeCompras():
