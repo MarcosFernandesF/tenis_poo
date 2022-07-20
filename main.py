@@ -1,12 +1,15 @@
-from usuarios import Usuario, Admin, PessoaFisica, PessoaJuridica
+from usuarios import  Admin, PessoaFisica, PessoaJuridica
 from tenis_carrinho import Tenis, CarrinhoDeCompras
 from endereco import Endereço
 
+#Usuários e produto pré-definido para facilitar o teste do programa
 endereco = Endereço("Lauro Linhares", "Não sei", "Florianópolis", "88036-000")
 carrinho = CarrinhoDeCompras()
 admin = Admin(20, 'Marcos', 20, 'marcos.rff@grad,ufsc.br')
 usuario_cpf = PessoaFisica(21, '128.991.219-01', 'MarcosCPF', 21, 'marcosrff.2001@gmail.com', endereco, carrinho)
 usuario_cnpj = PessoaJuridica(22, '83.899.526/0001-82', 'MarcosCNPJ', 22, 'marcos.empresa@gmail.com', carrinho)
+produto_exemplo = Tenis(23, 'Nike Air Max', 20, 500)
+
 
 lista_usuarios = [] #Lista de usuarios
 lista_produtos = [] #Lista de produtos
@@ -14,24 +17,26 @@ estoque = {} #Estoque, dicionario
 id = 0 # ID do usuário
 id_tenis = 0 # ID do tenis
 
+#Colocando os usuários e produto nas listas de objeto
 lista_usuarios.append(admin)
 lista_usuarios.append(usuario_cpf)
 lista_usuarios.append(usuario_cnpj)
+lista_produtos.append(produto_exemplo)
 
 while True:
-    print("-----------------Menu Principal------------------")
-    print("1. Cadastrar Usuario")
-    print("2. Atualizar Dados") 
-    print("3. Atualizar Endereço") #É preciso listar o endereço em algum momento
-    print("4. Comprar Produto") 
-    print("5. Menu Admin")
-    print("6. Sair")
-    op = int(input("Digite um número para executar uma operação: "))
+    print(" ----------------Menu Principal------------------ ")
+    print("| 1. Cadastrar Usuario                           |")
+    print("| 2. Atualizar Dados                             |") 
+    print("| 3. Atualizar Endereço                          |")
+    print("| 4. Comprar Produto                             |") 
+    print("| 5. Menu Admin                                  |")
+    print("| 6. Sair                                        |")
+    op = int(input("| Digite um número para executar uma operação: "))
     print()
 
 
     if op == 1:
-        print("Tela de Cadastro")
+        print(" -----------------Tela de Cadastro--------------- ")
         print("1. Pessoa Física")
         print("2. Pessoa Jurídica")
         op = int(input("Digite '1' ou '2' para escolher uma das opções: "))
@@ -50,7 +55,7 @@ while True:
 
             endereço = Endereço(rua, complemento, cidade, cep)
             carrinho = CarrinhoDeCompras()
-            usuario = PessoaFisica(cpf, id, nome, idade, email, endereço, carrinho)
+            usuario = PessoaFisica(id, cpf, nome, idade, email , endereço, carrinho)
             lista_usuarios.append(usuario)
 
             print("Pessoa Física cadastrada com sucesso!")
@@ -71,6 +76,7 @@ while True:
     elif op == 2:
         id = int(input("Deseja atualizar os dados de qual conta? Digite o ID: "))
         pessoa = input("Pessoa Física ou Jurídica? [F/J]: ").upper()
+        print("")
 
         for posicao, dados in enumerate(lista_usuarios):
             if id == dados.get_id():
@@ -82,11 +88,13 @@ while True:
                     cpf = input("CPF: ")
                     usuario = dados.atualizar_dados(cpf, nome, idade, email)
                     print("Dados atualizados com sucesso!")
+                    print("")
                     break
                 elif pessoa == 'J':
                     cnpj = input("CNPJ: ")
                     usuario = dados.atualizar_dados(cnpj, nome, idade, email)
                     print("Dados atualizados com sucesso!")
+                    print("")
                     break
         else:
             print("A conta não existe!")
@@ -95,23 +103,37 @@ while True:
     elif op == 3:
         id = int(input("Digite o ID da conta que deseja mudar o endereço: "))
         pessoa = input("Pessoa Física ou Jurídica? [F/J]: ").upper()
+        print("")
 
         for posicao, dados in enumerate(lista_usuarios):
             if id == dados.get_id():
-                if pessoa == 'F':
-                    rua = input("Rua: ")
-                    complemento = input("Complemento: ")
-                    cidade = input("Cidade: ")
-                    cep = input("CEP: ")
+                print("Endereço Atual da Conta: ")
+                dados.endereço.listar_dados()
+                print("")
 
-                    endereço = dados.endereço.atualizar_endereço(rua, complemento, cidade, cep)
-                    print("Endereço atualizado com sucesso!")
-                    print("")
+                op = input("Ainda deseja atualizar o endereço? [S/N]: ").upper()
+                print("")
+
+                if op == 'S':
+                    if pessoa == 'F':
+                        rua = input("Rua: ")
+                        complemento = input("Complemento: ")
+                        cidade = input("Cidade: ")
+                        cep = input("CEP: ")
+
+                        endereço = dados.endereço.atualizar_endereço(rua, complemento, cidade, cep)
+                        print("Endereço atualizado com sucesso!")
+                        print("")
+                        break
+                    elif pessoa == 'J':
+                        print("Apenas pessoas físicas possuem endereço ")
+                        print("")
+                        break
+                elif op == 'N':
                     break
-                elif pessoa == 'J':
-                    print("Apenas pessoas físicas possuem endereço ")
+                else:
+                    print("Resposta inválida.")
                     print("")
-                    break
         else:
             print("Essa conta não existe!")
             print("")
@@ -123,14 +145,14 @@ while True:
         for posicao, usuario in enumerate(lista_usuarios):
             if id == usuario.get_id():
                 while True:
-                    print("----------Menu de Compra----------")
-                    print("1. Mostrar Estoque")
-                    print("2. Adicionar no carrinho")
-                    print("3. Retirar do carrinho")
-                    print("4. Mostrar carrinho de compras")
-                    print("5. Efetuar Compra")
-                    print("6. Voltar ao menu principal")
-                    op = int(input("Digite um número para executar uma operação: "))
+                    print(" ----------------Menu de Compra------------------ ")
+                    print("| 1. Mostrar Estoque                             |")
+                    print("| 2. Adicionar no carrinho                       |")
+                    print("| 3. Retirar do carrinho                         |")
+                    print("| 4. Mostrar carrinho de compras                 |")
+                    print("| 5. Efetuar Compra                              |")
+                    print("| 6. Voltar ao menu principal                    |")
+                    op = int(input("| Digite um número para executar uma operação: "))
                     print("")
 
                     if op == 1:
@@ -202,13 +224,13 @@ while True:
             
     elif op == 5:
         while True: #Laço para continuar no mesmo menu mesmo após terminar a operação
-            print("--------------------Menu ADMIN--------------------")
-            print("1. Cadastrar Produto")
-            print("2. Alterar dados do produto")
-            print("3. Excluir Produto")
-            print("4. Excluir Usuário")
-            print("5. Voltar ao menu principal")
-            op = int(input("Digite um número para executar uma operação: "))
+            print(" -------------------Menu ADMIN------------------- ")
+            print("| 1. Cadastrar Produto                           |")
+            print("| 2. Alterar dados do produto                    |")
+            print("| 3. Excluir Produto                             |")
+            print("| 4. Excluir Usuário                             |")
+            print("| 5. Voltar ao menu principal                    |")
+            op = int(input("| Digite um número para executar uma operação: "))
             print("")
 
             if op == 1:
@@ -233,6 +255,7 @@ while True:
                 
                 print("")
                 id_produto = int(input("Digite o ID do produto que deseja modificar: "))
+                print("")
 
                 for posicao, dados in enumerate(lista_produtos):
                     if id_produto == dados.get_id():
@@ -255,6 +278,7 @@ while True:
                 print("")
 
                 id_produto = int(input("Digite o ID do produto que deseja excluir: "))
+                print("")
                 for posicao, dados in enumerate(lista_produtos):
                     if id_produto == dados.get_id():
                         print(estoque.pop(dados.get_nome(), "Produto não encontrado"))
@@ -262,6 +286,10 @@ while True:
 
                         print("Produto excluído com sucesso!")
                         print("")
+                        break
+                else:
+                    print("Produto não encontrado!")
+                    print("")
 
             elif op == 4:
                 for i in range (len(lista_usuarios)):
@@ -270,11 +298,18 @@ while True:
                 print("")
 
                 id = int(input("Digite o ID do usuario que deseja excluir: "))
+                print("")
+
                 for posicao, dados in enumerate(lista_usuarios):
                     if id == dados.get_id():
                         lista_usuarios.remove(dados)
                         print("Usuário excluído com sucesso!")
                         print("")
+                        break
+                else:
+                    print("Usuário não encontrado!")
+                    print("")
+                    break
 
             elif op == 5:
                 break

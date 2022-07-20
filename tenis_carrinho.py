@@ -1,6 +1,4 @@
-from re import I
-
-
+#Classe do Produto Tenis
 class Tenis():
     def __init__(self, id, nome, quantidade, valor):
         self.id = id
@@ -8,15 +6,15 @@ class Tenis():
         self.quantidade = quantidade
         self.valor = valor
 
-    def adicionar_produto(self, quantidade):
-        self.quantidade += quantidade
-
+    #Reduz quantidade de produto na classe
     def reduzir_produto(self, quantidade):
         self.quantidade -= quantidade
 
+    #Imprime os dados do produto na tela
     def listar_dados(self):
         print("ID: {} | Nome: {} | Quantidade: {} | Valor: {} R$" .format(self.id, self.nome, self.quantidade, self.valor))
 
+    #Atualiza os dados
     def atualizar_dados(self, nome, quantidade, valor):
         self.nome = nome
         self.quantidade = quantidade
@@ -34,17 +32,19 @@ class Tenis():
     def get_quantidade(self):
         return self.quantidade
     
-
+#Carrinho de compras
 class CarrinhoDeCompras():
     def __init__(self):
         self.produtos = {}
 
+    #Insere uma quantidade produtos no carrinho
     def inserir_produto(self, tenis, quantidade):
         if tenis.get_nome() not in self.produtos:
-            self.produtos[tenis.get_nome()] = 
+            self.produtos[tenis.get_nome()] = quantidade
         else:
             self.produtos[tenis.get_nome()] += quantidade
 
+    #Retira uma quantidade de produtos no carrinho
     def retirar_produto(self, tenis, quantidade):
         if tenis.get_nome() in self.produtos:
             if self.produtos[tenis.get_nome()] > 1:
@@ -54,6 +54,7 @@ class CarrinhoDeCompras():
         else:
             print(f"O produto '{tenis.get_nome()}' não está no carrinho de compras!")
 
+    #Imprime os produtos no carrinho de compras
     def lista_produtos(self, lista_produtos, usuario):
         retorno = True
         for produto in self.produtos:
@@ -65,6 +66,7 @@ class CarrinhoDeCompras():
                     retorno = False
         return retorno
 
+    #Faz a soma do carrinho
     def soma_total(self, lista_produtos):
         soma = 0
         for produto in self.produtos:
@@ -75,6 +77,7 @@ class CarrinhoDeCompras():
                     soma += (preço*quantidade)
         return soma
 
+    #Realiza a compra, da baixa no estoque
     def realizar_compra(self, lista_produtos, estoque):
         for produto in self.produtos:
             for tenis in lista_produtos:
