@@ -37,10 +37,11 @@ class Admin(Usuario):
         return self.id
 
 class PessoaFisica(Usuario):
-    def __init__(self, id, cpf, nome, idade, email, endereço):
+    def __init__(self, id, cpf, nome, idade, email, endereço, carrinho):
         super().__init__(id, nome, idade, email)
         self.CPF = cpf
         self.endereço = endereço
+        self.carrinho = carrinho
 
     def listar_dados(self):
         print("ID: {} | Nome: {} | CPF: {} | Idade: {} | Email: {}".format(self.id, self.nome, self.CPF, self.idade, self.email))
@@ -55,9 +56,10 @@ class PessoaFisica(Usuario):
         return self.id
 
 class PessoaJuridica(Usuario):
-    def __init__(self, id, cnpj, nome, idade, email):
+    def __init__(self, id, cnpj, nome, idade, email, carrinho):
         super().__init__(id, nome, idade, email)
         self.CNPJ = cnpj
+        self.carrinho = carrinho
 
     def listar_dados(self):
         print("ID: {} | Nome: {} | CPF: {} | Idade: {} | Email: {}".format(self.id, self.nome, self.CNPJ, self.idade, self.email))
