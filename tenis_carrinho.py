@@ -56,15 +56,18 @@ class CarrinhoDeCompras():
 
     #Imprime os produtos no carrinho de compras
     def lista_produtos(self, lista_produtos, usuario):
-        retorno = True
-        for produto in self.produtos:
-            for tenis in lista_produtos:
-                if produto == tenis.get_nome():
-                    print(f"- {produto} : {tenis.get_valor()} R$ | Quantidade: {self.produtos[produto]}")
-                    soma = usuario.carrinho.soma_total(lista_produtos)
-                    print(f"- Soma total dos preços = {soma} R$")
-                    retorno = False
-        return retorno
+        if len(self.produtos) == 0:
+            print("Não ha nada no carrinho de compras!")
+            print("")
+        else:
+            for produto in self.produtos:
+                for tenis in lista_produtos:
+                    if produto == tenis.get_nome():
+                        print(f"ID: {tenis.get_id()} | {produto} : {tenis.get_valor()} R$ | Quantidade: {self.produtos[produto]}")
+                        soma = usuario.carrinho.soma_total(lista_produtos)
+                        retorno = False
+            print(f"Soma total dos preços = {soma} R$")
+            print("")
 
     #Faz a soma do carrinho
     def soma_total(self, lista_produtos):

@@ -1,21 +1,26 @@
+from errno import ELIBACC
 from usuarios import  Admin, PessoaFisica, PessoaJuridica
 from tenis_carrinho import Tenis, CarrinhoDeCompras
 from endereco import Endereço
 
 #Usuários e produto pré-definido para facilitar o teste do programa
 endereco = Endereço("Lauro Linhares", "Não sei", "Florianópolis", "88036-000")
-carrinho = CarrinhoDeCompras()
+carrinho1 = CarrinhoDeCompras()
+carrinho2 = CarrinhoDeCompras()
 admin = Admin(20, 'Marcos', 20, 'marcos.rff@grad,ufsc.br')
-usuario_cpf = PessoaFisica(21, '128.991.219-01', 'MarcosCPF', 21, 'marcosrff.2001@gmail.com', endereco, carrinho)
-usuario_cnpj = PessoaJuridica(22, '83.899.526/0001-82', 'MarcosCNPJ', 22, 'marcos.empresa@gmail.com', carrinho)
-produto_exemplo = Tenis(23, 'Nike Air Max', 20, 500)
+usuario_cpf = PessoaFisica(21, '128.303.529-01', 'MarcosCPF', 21, 'marcosrff.2001@gmail.com', endereco, carrinho1)
+usuario_cnpj = PessoaJuridica(22, '83.899.526/0001-82', 'MarcosCNPJ', 22, 'marcos.empresa@gmail.com', carrinho2)
+produto_exemplo = Tenis(23, 'Nike Air Max', 20, 500.0)
 
 
 lista_usuarios = [] #Lista de usuarios
 lista_produtos = [] #Lista de produtos
 estoque = {} #Estoque, dicionario
-id = 0 # ID do usuário
+id_usuario = 0 # ID do usuário
 id_tenis = 0 # ID do tenis
+
+#Colocando produto exemplo no estoque
+estoque['Nike Air Max'] = 20
 
 #Colocando os usuários e produto nas listas de objeto
 lista_usuarios.append(admin)
@@ -26,7 +31,7 @@ lista_produtos.append(produto_exemplo)
 while True:
     print(" ----------------Menu Principal------------------ ")
     print("| 1. Cadastrar Usuario                           |")
-    print("| 2. Atualizar Dados                             |") 
+    print("| 2. Atualizar Dados                             |") #Quando seleciona uma conta Fisica mas digita J ele continua
     print("| 3. Atualizar Endereço                          |")
     print("| 4. Comprar Produto                             |") 
     print("| 5. Menu Admin                                  |")
@@ -41,7 +46,7 @@ while True:
         print("2. Pessoa Jurídica")
         op = int(input("Digite '1' ou '2' para escolher uma das opções: "))
         print() 
-        id += 1
+        id_usuario += 1
         email = input("Email: ")
         nome = input("Nome: ")
         
@@ -52,10 +57,11 @@ while True:
             complemento = input("Complemento: ")
             cidade = input("Cidade: ")
             cep = input("CEP: ")
+            print("")
 
             endereço = Endereço(rua, complemento, cidade, cep)
             carrinho = CarrinhoDeCompras()
-            usuario = PessoaFisica(id, cpf, nome, idade, email , endereço, carrinho)
+            usuario = PessoaFisica(id_usuario, cpf, nome, idade, email , endereço, carrinho)
             lista_usuarios.append(usuario)
 
             print("Pessoa Física cadastrada com sucesso!")
@@ -63,14 +69,16 @@ while True:
             print("")
 
         elif op == 2:
-            cnpj = input("CNPJ")
+            cnpj = input("CNPJ: ")
+            idade = 0
+            print("")
 
             carrinho = CarrinhoDeCompras()
-            usuario = PessoaJuridica(cnpj, id, nome, email, carrinho)
+            usuario = PessoaJuridica(id_usuario, cnpj, nome, idade, email, carrinho)
             lista_usuarios.append(usuario)
 
             print("Pessoa Jurídica cadastrada com sucesso!")
-            print(f"Seu ID é: {usuario.get_id}")
+            print(f"Seu ID é: {usuario.get_id()}")
             print("")
 
     elif op == 2:
@@ -82,17 +90,21 @@ while True:
             if id == dados.get_id():
                 email = input("Email: ")
                 nome = input("Nome: ")
-                idade = int(input("Idade: "))
 
                 if pessoa == 'F':
+                    idade = int(input("Idade: "))
                     cpf = input("CPF: ")
+                    print("")
+
                     usuario = dados.atualizar_dados(cpf, nome, idade, email)
                     print("Dados atualizados com sucesso!")
                     print("")
                     break
                 elif pessoa == 'J':
                     cnpj = input("CNPJ: ")
-                    usuario = dados.atualizar_dados(cnpj, nome, idade, email)
+                    print("")
+
+                    usuario = dados.atualizar_dados(cnpj, nome, email)
                     print("Dados atualizados com sucesso!")
                     print("")
                     break
@@ -183,7 +195,7 @@ while True:
 
                     elif op == 3:
                         print("------------------Carrinho de Compras------------------")
-                        usuario.carrinho.lista_produtos()
+                        usuario.carrinho.lista_produtos(lista_produtos, usuario)
 
                         while True:
                             id_produto = int(input("Digite o ID do produto que deseja retirar do carrinho, caso contrário, digite '0' para sair da compra: "))
@@ -197,15 +209,13 @@ while True:
 
                     elif op == 4:
                         print("------------------Carrinho de Compras------------------")
-                        retorno = usuario.carrinho.lista_produtos(lista_produtos, usuario)
-                        if retorno == True:
-                            print("Não ha nada no carrinho de compras!")
-                            print("")
-
+                        usuario.carrinho.lista_produtos(lista_produtos, usuario)
+                        
                     elif op == 5:
                         while True:
+                            usuario.carrinho.lista_produtos(lista_produtos, usuario)
                             op = input("Deseja efetuar a compra dos seguintes itens? [S/N]").upper()
-                            retorno = usuario.carrinho.lista_produtos(lista_produtos, usuario)
+    
                             if op == 'S':
                                 usuario.carrinho.soma_total(lista_produtos)
                                 usuario.carrinho.realizar_compra(lista_produtos, estoque)
@@ -268,8 +278,10 @@ while True:
                         lista_produtos[posicao].atualizar_dados(nome,quantidade,valor)
                         print("Produto alterado com sucesso!")
                         print("")
-                    else:
-                        print("Esse produto não existe ")
+                        break
+                else:
+                    print("Esse produto não existe ")
+                    print("")
 
             elif op == 3:
                 for i in range (len(lista_produtos)):
@@ -281,7 +293,7 @@ while True:
                 print("")
                 for posicao, dados in enumerate(lista_produtos):
                     if id_produto == dados.get_id():
-                        print(estoque.pop(dados.get_nome(), "Produto não encontrado"))
+                        estoque.pop(dados.get_nome(), "Produto não encontrado")
                         lista_produtos.remove(dados)
 
                         print("Produto excluído com sucesso!")
@@ -309,7 +321,6 @@ while True:
                 else:
                     print("Usuário não encontrado!")
                     print("")
-                    break
 
             elif op == 5:
                 break

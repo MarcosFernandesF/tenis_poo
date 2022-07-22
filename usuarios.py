@@ -55,7 +55,7 @@ class PessoaJuridica(Usuario):
 
     #Imprime o dado do usuário na tela
     def listar_dados(self):
-        print("ID: {} | Nome: {} | CPF: {} | Idade: {} | Email: {}".format(self.id, self.nome, self.CNPJ, self.idade, self.email))
+        print("ID: {} | Nome: {} | CNPJ: {} | Email: {}".format(self.id, self.nome, self.CNPJ, self.email))
 
     #Atualização de dados
     def atualizar_dados(self, cnpj, nome, email):
