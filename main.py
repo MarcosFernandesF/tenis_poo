@@ -215,7 +215,8 @@ while True:
                         while True:
                             usuario.carrinho.lista_produtos(lista_produtos, usuario)
                             op = input("Deseja efetuar a compra dos seguintes itens? [S/N]").upper()
-    
+                            print("")
+
                             if op == 'S':
                                 usuario.carrinho.soma_total(lista_produtos)
                                 usuario.carrinho.realizar_compra(lista_produtos, estoque)

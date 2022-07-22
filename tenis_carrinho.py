@@ -82,12 +82,20 @@ class CarrinhoDeCompras():
 
     #Realiza a compra, da baixa no estoque
     def realizar_compra(self, lista_produtos, estoque):
+        flag = 0
         for produto in self.produtos:
             for tenis in lista_produtos:
                 for tenis_est in estoque:
                     if produto == tenis.get_nome() and produto == tenis_est:
-                        tenis.reduzir_produto(self.produtos[produto])
-                        estoque[tenis_est] -= (self.produtos[produto])
-        self.produtos = {}
-        print("Compra realizada com sucesso.")
-        print("")
+                        if self.produtos[produto] > estoque[tenis_est]:
+                            print("Quantidade não existente no estoque! ")
+                            print("Você deve retirar produto do seu carrinho!")
+                            print("")
+                        else:
+                            flag = 1
+                            tenis.reduzir_produto(self.produtos[produto])
+                            estoque[tenis_est] -= (self.produtos[produto])
+        if flag == 1:
+            self.produtos = {}
+            print("Compra realizada com sucesso.")
+            print("")
