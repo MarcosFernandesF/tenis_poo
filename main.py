@@ -1,13 +1,12 @@
-from errno import ELIBACC
 from usuarios import  Admin, PessoaFisica, PessoaJuridica
 from tenis_carrinho import Tenis, CarrinhoDeCompras
 from endereco import Endereço
 
 #Usuários e produto pré-definido para facilitar o teste do programa
-endereco = Endereço("Lauro Linhares", "Não sei", "Florianópolis", "88036-000")
-carrinho1 = CarrinhoDeCompras()
-carrinho2 = CarrinhoDeCompras()
-admin = Admin(20, 'Marcos', 20, 'marcos.rff@grad,ufsc.br')
+endereco = Endereço("Lauro Linhares", "Não sei", "Florianópolis", "88036-000") #Endereço pessoa física
+carrinho1 = CarrinhoDeCompras() #Fisico
+carrinho2 = CarrinhoDeCompras() #Juridico
+admin = Admin(20, 'Marcos', 20, 'marcos.rff@grad,ufsc.br') 
 usuario_cpf = PessoaFisica(21, '128.303.529-01', 'MarcosCPF', 21, 'marcosrff.2001@gmail.com', endereco, carrinho1)
 usuario_cnpj = PessoaJuridica(22, '83.899.526/0001-82', 'MarcosCNPJ', 22, 'marcos.empresa@gmail.com', carrinho2)
 produto_exemplo = Tenis(23, 'Nike Air Max', 20, 500.0)
@@ -31,7 +30,7 @@ lista_produtos.append(produto_exemplo)
 while True:
     print(" ----------------Menu Principal------------------ ")
     print("| 1. Cadastrar Usuario                           |")
-    print("| 2. Atualizar Dados                             |") #Quando seleciona uma conta Fisica mas digita J ele continua
+    print("| 2. Atualizar Dados                             |") 
     print("| 3. Atualizar Endereço                          |")
     print("| 4. Comprar Produto                             |") 
     print("| 5. Menu Admin                                  |")
@@ -184,6 +183,7 @@ while True:
                         print("")
                         while True:
                             id_produto = int(input("Digite o ID do produto que deseja comprar, caso contrário, digite '0' para sair da compra: "))
+                            print("")
                             if id_produto == 0:
                                 break
                             else:
@@ -199,6 +199,7 @@ while True:
 
                         while True:
                             id_produto = int(input("Digite o ID do produto que deseja retirar do carrinho, caso contrário, digite '0' para sair da compra: "))
+                            print("")
                             if id_produto == 0:
                                 break
                             else:
@@ -218,7 +219,6 @@ while True:
                             print("")
 
                             if op == 'S':
-                                usuario.carrinho.soma_total(lista_produtos)
                                 usuario.carrinho.realizar_compra(lista_produtos, estoque)
                                 break
                             elif op == 'N':
@@ -274,8 +274,9 @@ while True:
                         nome = input("Nome do produto: ")
                         quantidade = int(input("Quantidade: "))
                         valor = float(input("Preço: "))
-
-                        estoque[nome_antigo] = quantidade
+                        
+                        estoque[nome] = quantidade
+                        del estoque[nome_antigo]
                         lista_produtos[posicao].atualizar_dados(nome,quantidade,valor)
                         print("Produto alterado com sucesso!")
                         print("")
