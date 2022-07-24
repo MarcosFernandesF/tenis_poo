@@ -31,4 +31,5 @@ Esse aplicativo consiste em uma loja online de tênis e possui as seguintes func
 <img src="https://user-images.githubusercontent.com/69658602/180351502-5dc6cf0e-f233-4d1e-98f8-a3a30e87c50b.png">
 
 ## Diagrama de Classes
-<img src="https://user-images.githubusercontent.com/69658602/180353936-c4cd344e-1bd4-4ee1-9591-67e9311907d3.png">
+<img src="https://user-images.githubusercontent.com/69658602/180631974-c77d810d-df65-4cf5-8542-c2d7ee534888.png">
+
