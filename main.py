@@ -45,40 +45,55 @@ while True:
         print("2. Pessoa Jurídica")
         op = int(input("Digite '1' ou '2' para escolher uma das opções: "))
         print() 
-        id_usuario += 1
         email = input("Email: ")
         nome = input("Nome: ")
         
         if op == 1:
             idade = int(input("Idade: "))
             cpf = input("CPF: ")
-            rua = input("Rua: ")
-            complemento = input("Complemento: ")
-            cidade = input("Cidade: ")
-            cep = input("CEP: ")
-            print("")
+            for usuarioExistente in lista_usuarios:
+                if cpf == usuarioExistente.get_doc():
+                    print("")
+                    print("Já existe um usuário com este CNPJ, refaça o cadastro novamente.")
+                    print("")
+                    break
+            else:
+                rua = input("Rua: ")
+                complemento = input("Complemento: ")
+                cidade = input("Cidade: ")
+                cep = input("CEP: ")
+                print("")
 
-            endereço = Endereço(rua, complemento, cidade, cep)
-            carrinho = CarrinhoDeCompras()
-            usuario = PessoaFisica(id_usuario, cpf, nome, idade, email , endereço, carrinho)
-            lista_usuarios.append(usuario)
+                endereço = Endereço(rua, complemento, cidade, cep)
+                carrinho = CarrinhoDeCompras()
+                id_usuario += 1
+                usuario = PessoaFisica(id_usuario, cpf, nome, idade, email , endereço, carrinho)
+                lista_usuarios.append(usuario)
 
-            print("Pessoa Física cadastrada com sucesso!")
-            print(f"Seu ID é: {usuario.get_id()}")
-            print("")
+                print("Pessoa Física cadastrada com sucesso!")
+                print(f"Seu ID é: {usuario.get_id()}")
+                print("")
 
         elif op == 2:
             cnpj = input("CNPJ: ")
-            idade = 0
-            print("")
+            for usuarioExistente in lista_usuarios:
+                if cnpj == usuarioExistente.get_doc():
+                    print("")
+                    print("Já existe um usuário com este CNPJ, refaça o cadastro novamente.")
+                    print("")
+                    break
+            else:
+                idade = 0
+                print("")
 
-            carrinho = CarrinhoDeCompras()
-            usuario = PessoaJuridica(id_usuario, cnpj, nome, idade, email, carrinho)
-            lista_usuarios.append(usuario)
+                carrinho = CarrinhoDeCompras()
+                id_usuario += 1
+                usuario = PessoaJuridica(id_usuario, cnpj, nome, idade, email, carrinho)
+                lista_usuarios.append(usuario)
 
-            print("Pessoa Jurídica cadastrada com sucesso!")
-            print(f"Seu ID é: {usuario.get_id()}")
-            print("")
+                print("Pessoa Jurídica cadastrada com sucesso!")
+                print(f"Seu ID é: {usuario.get_id()}")
+                print("")
 
     elif op == 2:
         id = int(input("Deseja atualizar os dados de qual conta? Digite o ID: "))
@@ -92,18 +107,16 @@ while True:
 
                 if pessoa == 'F':
                     idade = int(input("Idade: "))
-                    cpf = input("CPF: ")
                     print("")
 
-                    usuario = dados.atualizar_dados(cpf, nome, idade, email)
+                    usuario = dados.atualizar_dados(nome, idade, email)
                     print("Dados atualizados com sucesso!")
                     print("")
                     break
                 elif pessoa == 'J':
-                    cnpj = input("CNPJ: ")
                     print("")
 
-                    usuario = dados.atualizar_dados(cnpj, nome, email)
+                    usuario = dados.atualizar_dados(nome, email)
                     print("Dados atualizados com sucesso!")
                     print("")
                     break
@@ -195,7 +208,7 @@ while True:
 
                     elif op == 3:
                         print("------------------Carrinho de Compras------------------")
-                        usuario.carrinho.lista_produtos(lista_produtos, usuario)
+                        usuario.carrinho.listar_produtos(lista_produtos, usuario)
 
                         while True:
                             id_produto = int(input("Digite o ID do produto que deseja retirar do carrinho, caso contrário, digite '0' para sair da compra: "))
@@ -210,11 +223,11 @@ while True:
 
                     elif op == 4:
                         print("------------------Carrinho de Compras------------------")
-                        usuario.carrinho.lista_produtos(lista_produtos, usuario)
+                        usuario.carrinho.listar_produtos(lista_produtos, usuario)
                         
                     elif op == 5:
                         while True:
-                            usuario.carrinho.lista_produtos(lista_produtos, usuario)
+                            usuario.carrinho.listar_produtos(lista_produtos, usuario)
                             op = input("Deseja efetuar a compra dos seguintes itens? [S/N]").upper()
                             print("")
 

@@ -47,15 +47,15 @@ class CarrinhoDeCompras():
     #Retira uma quantidade de produtos no carrinho
     def retirar_produto(self, tenis, quantidade):
         if tenis.get_nome() in self.produtos:
-            if self.produtos[tenis.get_nome()] > 1:
-                self.produtos[tenis.get_nome()] -= quantidade
-            else:
+            if (self.produtos[tenis.get_nome()] - quantidade) < 1:
                 del self.produtos[tenis.get_nome()]
+            else:
+                self.produtos[tenis.get_nome()] -= quantidade
         else:
             print(f"O produto '{tenis.get_nome()}' não está no carrinho de compras!")
 
     #Imprime os produtos no carrinho de compras
-    def lista_produtos(self, lista_produtos, usuario):
+    def listar_produtos(self, lista_produtos, usuario):
         if len(self.produtos) == 0:
             print("Não ha nada no carrinho de compras!")
             print("")
@@ -65,7 +65,6 @@ class CarrinhoDeCompras():
                     if produto == tenis.get_nome():
                         print(f"ID: {tenis.get_id()} | {produto} : {tenis.get_valor()} R$ | Quantidade: {self.produtos[produto]}")
                         soma = usuario.carrinho.soma_total(lista_produtos)
-                        retorno = False
             print(f"Soma total dos preços = {soma} R$")
             print("")
 

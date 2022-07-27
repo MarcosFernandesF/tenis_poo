@@ -23,6 +23,9 @@ class Admin(Usuario):
 
     def get_id(self):
         return self.id
+    
+    def get_doc(self):
+        pass
 
 #Classe de Pessoa Física, herança Usuário
 class PessoaFisica(Usuario):
@@ -37,14 +40,16 @@ class PessoaFisica(Usuario):
         print("ID: {} | Nome: {} | CPF: {} | Idade: {} | Email: {}".format(self.id, self.nome, self.CPF, self.idade, self.email))
 
     #Atualização de dados
-    def atualizar_dados(self, cpf, nome, idade, email):
-        self.CPF = cpf
+    def atualizar_dados(self, nome, idade, email):
         self.nome = nome
         self.idade = idade
         self.email = email
 
     def get_id(self):
         return self.id
+    
+    def get_doc(self):
+        return self.CPF
 
 #Classe de Pessoa Jurídica, herança Usuário
 class PessoaJuridica(Usuario):
@@ -58,10 +63,12 @@ class PessoaJuridica(Usuario):
         print("ID: {} | Nome: {} | CNPJ: {} | Email: {}".format(self.id, self.nome, self.CNPJ, self.email))
 
     #Atualização de dados
-    def atualizar_dados(self, cnpj, nome, email):
-        self.CNPJ = cnpj
+    def atualizar_dados(self, nome, email):
         self.nome = nome
         self.email = email
 
     def get_id(self):
         return self.id
+
+    def get_doc(self):
+        return self.CNPJ
